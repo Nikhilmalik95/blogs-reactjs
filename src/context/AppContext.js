@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { baseUrl } from "../baseUrl";
 export const AppContext = createContext();
 
@@ -7,6 +7,8 @@ export default function AppConextProvider({children}){
     const [posts , setPosts] = useState([])
     const [page , setPage] =useState(1);
     const [totalPages , setTotalPages] = useState(null)
+
+    
 
     async function fetchBlogPosts(page = 1 , tag = null , category){
         setLoading(true)
@@ -33,6 +35,10 @@ export default function AppConextProvider({children}){
         }
         setLoading(false)
     }
+
+    useEffect(()=>{
+        fetchBlogPosts();
+    } , [])
 
     function handlePageChange(page){
         setPage(page)
